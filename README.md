@@ -1,2 +1,2 @@
 # k8s-recipes
-kubernetes recipes
+kubernetes learning notes, process, commands and recipes.
