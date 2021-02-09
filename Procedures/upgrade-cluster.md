@@ -59,4 +59,4 @@ After applying the upgrades to the node's contronl plane components, go back to 
   - hold the new kubectl and kubelet versions
     - ``` sudo apt-mark hold kubelet kubectl ```
   - restore daemons
-    - ``` sudo systemctl daemon-set &&  sudo systemctl restart kubelet  ```
+    - ``` sudo systemctl daemon-reload &&  sudo systemctl restart kubelet  ```
