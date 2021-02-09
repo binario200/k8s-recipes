@@ -25,11 +25,11 @@ This is the general process.
   - hold the new kubectl and kubelet versions
     - ``` sudo apt-mark hold kubelet kubectl ```
   - restore daemons
-    - ``` sudo systemctl daemon-set &&  sudo systemctl restart kubelet  ```
+    - ``` sudo systemctl daemon-reload &&  sudo systemctl restart kubelet  ```
   - Verify updates
     - ```  kubectl get nodes ```
   - Make the master node available again for the scheduller
-    - ``` kubectl uncordn master ```
+    - ``` kubectl uncordon master ```
 
 ## Prepare nodes to be upgraded
 Before upgrade controle plane components in a cluster node, evict node pods, one node at the time before to upgrade the component's versions. 
