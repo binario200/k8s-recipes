@@ -16,3 +16,5 @@ kubectl create -f <path-to-deployment-definition>
 # deleting deployment
 kubectl delete deployment <deployment-name>
 
+# Scalling a deployment
+kubectl scale deployment <deployment-name> --replicas=<number-of-replicas>
