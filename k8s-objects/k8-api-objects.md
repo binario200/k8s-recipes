@@ -9,9 +9,14 @@
 - It is a controller which manages the state of ReplicaSets and the pods within 
 ## ReplicaSet
 - Orchestrate individual pod lifecycle and updates
+- Supports label selectors
+- Modifying pod's lables related with the replicaset that belongs, will insolate the pod and the RS will create a new one. 
 
 ## DaemonSets
-- Ensures taht a single pod of the same type run on every node in the cluster
+- Ensures that a single pod of the same type run on every node in the cluster
+- Update strategy.type:
+  - rollingUpdate       : allows manual termination of some pods, resulting in an update image when they are recreated
+  - onDelete            : upgrade a container when the predecesor is deleted
 ## Pods
 - A group of containers (with some associated data volumes)
 - One IP address per pod
@@ -19,6 +24,10 @@
 - Containers in a pod will have an interface like eth0@tunl0.
 - All nodes can communicate with each other across nodes
 
+## Labels 
+ - Part of object's metadata. 
+ - Can be used to select an object, based on an arbitrary string
+ - Can be defined at: pod templates, deployment specification, on the fly. 
 ## Jobs
 - Part of batch API group
 - They are used to run a number of pods to completion
@@ -26,8 +35,6 @@
 - Key properties of a job definition:  completions, parallelism, activeDeadLine
 
 ## CronJob
-
-
   
 ## Service Account
 - Provides an indentifier for processes running in a pod to access the API server and perform actions that it is authorized to do
