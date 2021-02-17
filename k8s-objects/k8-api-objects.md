@@ -6,8 +6,11 @@
 - Used to reference both kernel features and segregation of API Objects by kubernetes
 - some namespaces: default, kube-system
 ## Deployment
-- It is a controller which manages the state of ReplicaSets and the pods within 
+- It is a controller which manages the state of ReplicaSets and the pods within
+- Will manage replicasets 
 ## ReplicaSet
+- This controller will  ensure you have certain number of pods running
+- Will create or terminate pods until the number of running pods matches the specification
 - Orchestrate individual pod lifecycle and updates
 - Supports label selectors
 - Modifying pod's lables related with the replicaset that belongs, will insolate the pod and the RS will create a new one. 
@@ -23,6 +26,40 @@
 - All containers share the same network namespace    
 - Containers in a pod will have an interface like eth0@tunl0.
 - All nodes can communicate with each other across nodes
+
+## Volumes
+- A k8s volume shares the pod lifetime, not the container within.
+- A volume is a directory, possible pre-populated, available to containers in a pod.
+- Pod specification can declare one or more volumes
+- Access Mode
+  - ReadWriteOnce : Allows read-write by a single node
+  - ReadOnlyMany  : allows read-only by multiple nodes
+  - ReadWriteMany : Allows read-write by many nodes
+- Types:
+  - local
+    - emptyDir:
+      - Is an empty directory that gets erases when the pod dies but is recreated when containers restarts
+      - kubelet will create the directory in the container but not mount any storage
+      - Data writen to shared container space. No persistent storage
+      - When container is destroyed directory is deleted
+    - hostPath
+      - mount a resource from the host node filesystem: directory, file socket, character, block device
+      - DirectoryOrCreate
+      - FileOrCreate
+  - Network base:
+    - GCE
+    - AWS
+    - ...
+
+##  Persistent Volumes
+- Empty or prepopulated volumes to be claimed by a pod using  persistent volume claim. 
+- Cycle: 
+  - Ingesting the storage
+  - binding storage to a pod
+  - recycle the storage
+
+
+
 
 ## Labels 
  - Part of object's metadata. 

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Deployment  # The object type, this case an deployment
+metadata: 
+  annotations: # How many times this object has been edited
+  labels: # To be use with kubectl to select or exclude objects 
+  namespaces: 
+spec:  # replicaset specification
+  progressDeadlineSeconds: 600 # time in seconds until a progress error is reported during a change
+  replicas: 1 # how many pods should be created
+  revisionHistoryLimit: # How many old replica set specifications to retainfor rollback 
+  selector: # 
+    matchLabel:
+      <Label>: <labelValue>
+  strategy:  # values having to do with updating pods
+    rollingUpdate: 
+      maxSurge: 25% # Number of new pods to create before deleiting old ones. 
+      maxUnavailable: 25% # Number of pods which can be  in a state other taht READY during UPDATE process
+    type: <RollingUpdate> # you can control how many pods are deleted at a time
+                          # <Recreate>: would delete all existing pods before new pods are created
+  template: # data passed to the replicaset to know how to deploy an object
+    metadata: 
+      labels:
+        <label-name>: <label-value>
+    spec:
+      containers:
+        - image: <nginx-1.17.7-Alpine>
+          name: <pod-name>
+          resources: {} # set resource restrictions and settins (cpu, memory)
+          # ... more pod settings
+    status: 
+       availableReplicas: 2 # indicates how many were configured by the replicaset          

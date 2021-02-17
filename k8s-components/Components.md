@@ -16,6 +16,8 @@ Responsible for ensuring the current state matches the desired state
   - Contact to the controllers to match the desire state
 - kubectl 
   - Makes API call on you behalf
+- kubelet
+  - Its a daemon that checks the pod specifiction by asking the container engine for the current status. 
 
 ### Another components
 - Container Network Internet (CNI)
