@@ -58,9 +58,23 @@
   - binding storage to a pod
   - recycle the storage
 
+### Persistent storage phase
+  - Provision
+    - Persistent volumes can be created in advance or requested from a dynamic source (cloud provider )
+  - Bind
+    - There is a persistent volume claim (storage, access, storage classes). A control loop wathcer bind the Persistent volume claim (pvc) with a persistent volume (pv)
+  - Usage
+    - The bound volume is mounted for the pod to use. Continue as long as the pod required
+  - Release
+    - When the pod is donde using the pv and a API request it, its sent to delete the pvc. The data remains depending on the persistent volume reclaim policy
+  - Reclaim 
+    - Retain: Keeps the data instact
+    - Delete: Tells volume plugin to delete the API object as well as the storage behind it
 
-
-
+## Persistent Volumes claims
+- Before pods take advantage of the new persistent volume, we need to create a persistent volume claim. Defining its access mode, resource's specifications.
+- A pod references a persistent volumen claim referencing the pvc's metadata.name at the pod's claimName property. 
+ 
 ## Labels 
  - Part of object's metadata. 
  - Can be used to select an object, based on an arbitrary string
@@ -75,20 +89,55 @@
   
 ## Service Account
 - Provides an indentifier for processes running in a pod to access the API server and perform actions that it is authorized to do
+
+## Service
+- Gets traffic from the outside world to a pod, or from one pod to another
+- Can be also used to point to a service in a different namespace or even a resource outside the cluster, such as a legacy application not yet in the k8s  
+## ClusterIP
+- Interfal-facing IP address
+- Use for access, throubheshooting, maintenance operations
+
 ## nodePort
+- Statis IP address accessible to the outside world
 - It's a service that connects the pod with outside network
 - Contains endpoints. IP address + port
+  
+## LoadBalancer
+- Exposes service externally (nodePort and ClusterIP are created) using cloud provider
+
+## ExternalName
+- Maps service to contents of externalName using a CNAME record.
 
 ## Endpoint
-- Represets the set of IPs for pods taht match a particular service
+- Represets the set of IPs for pods that match a particular service
 
 ## LimitRange
-- Use a LimitRange in order to specify resource limits (cpu, memoriy, disk) for an entire namespace
+- Use a LimitRange in order to specify resource limits (cpu, memory, disk) for an entire namespace
 - New pods will inherit namespace's LimitRange resource limits
 - Deployment resource specifications will override the LimitRange resource limits
 
 ## Resource Quota
+- Limits the total resources (storage, cpu) consuption as well as the number of persistent volume claims
 - Allows you to define quotas per namespace
-- i.eL number of pods for a namespace
+- i.e number of pods for a namespace
 
 ## Secrets
+- Using secret API password resources can be conded or encrypted
+- Secrets are base 64 enconded
+- To encrypt:
+  - Create a encriptionConfiguration with a key and proper identity
+  - kube-api server needs the --encryption-provider-config set for a provider
+- Secrets can be used as environment variables (spec.containers[*].image.env[*].name.valueFrom.secretKeyRef: name and key)
+- Secrets can be mounted as file using a volume definition in a pod manifest (spec.containers[*].image.volumeMounts.name references spec.containers[*].volumes[*].name using the secret.secreteName property to reference the secret to use)
+  
+## ConfigMap
+- Sto data as sets of key-value pairs or plain configuration files
+- not encoded
+- can be used as:
+  - pod environment variables (use the env's valueFrom.ConfigMapKeyRef.name/key to reference an configMap's property)
+  - pod commands
+  - to populate a volume (use the volume's configMap.name to reference the configMap at the pod definition)
+- Ways a configMap can ingest data:
+  - From a literal value
+  - From a file
+  - From a directory of files

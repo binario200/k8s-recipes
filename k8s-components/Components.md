@@ -18,7 +18,14 @@ Responsible for ensuring the current state matches the desired state
   - Makes API call on you behalf
 - kubelet
   - Its a daemon that checks the pod specifiction by asking the container engine for the current status. 
-
+- kube-proxy
+  - Agent that watches the kubernetes API for new services and endpoints being created on each node 
+  - It opens random ports and listen for traffic to the clusterIP:port and redirectsto the randomly generated service endpoint
+  - IPtables is the default proxy mode 
+- CoreDNS
+  - Once the container starts, coreDNS will run a server fo the zones it has been configured to server. 
+  - Then each server can load one or more plugin chaing to provide other functionality. 
+  
 ### Another components
 - Container Network Internet (CNI)
   - Provide container networking. Configure the cluster network
