@@ -22,7 +22,7 @@ kubectl scale deployment <deployment-name> --replicas=<number-of-replicas>
 
 # Deployment rollbacks
 # The --record option of kubectl create command allows ANNOTATIONS the resource definition and creates REVISIONS
-kubectl create deployment <deployment-name> --image=<image-name> --record
+kubectl create deployment <deployment-name> image=<image-name> --record
 
 kubectl set image deployment/<deployment-name> image-name=<image-name:new-version> --record
 ## kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1 --record

@@ -71,6 +71,10 @@
     - Retain: Keeps the data instact
     - Delete: Tells volume plugin to delete the API object as well as the storage behind it
 
+### StorageClass
+  Provices a way for an administrator to describe a class of storage
+
+
 ## Persistent Volumes claims
 - Before pods take advantage of the new persistent volume, we need to create a persistent volume claim. Defining its access mode, resource's specifications.
 - A pod references a persistent volumen claim referencing the pvc's metadata.name at the pod's claimName property. 
@@ -92,7 +96,19 @@
 
 ## Service
 - Gets traffic from the outside world to a pod, or from one pod to another
-- Can be also used to point to a service in a different namespace or even a resource outside the cluster, such as a legacy application not yet in the k8s  
+- Can be also used to point to a service in a different namespace or even a resource outside the cluster, such as a legacy application not yet in the k8s 
+  
+## Cluster DNS
+- When a service is created k8s DNS services creates a record for the service: http://<service-name>.<namespace>
+- All the services are grouped into another namespace called: svc, http://<service-name>.<namespace>.svc
+- Root domain for the cluster is: cluster.local, http://<service-name>.<namespace>.svc.cluster.local  -> fully qualificated name for the serve
+- DNS records created for pods: <IP with ->.<namespace>.pod.cluster.local
+
+## Core DNS
+- K8s deploys a dns server in the cluster: core dns
+- Deployed as pods at kube-system namspace
+- coredns executable can be located at /etc/coredns/corefile
+- Configuration file for coredns: look at ```kubectl describe deployments.apps coredns``` in the args for the container image
 ## ClusterIP
 - Interfal-facing IP address
 - Use for access, throubheshooting, maintenance operations
@@ -131,7 +147,7 @@
 - Secrets can be mounted as file using a volume definition in a pod manifest (spec.containers[*].image.volumeMounts.name references spec.containers[*].volumes[*].name using the secret.secreteName property to reference the secret to use)
   
 ## ConfigMap
-- Sto data as sets of key-value pairs or plain configuration files
+- Store data as sets of key-value pairs or plain configuration files
 - not encoded
 - can be used as:
   - pod environment variables (use the env's valueFrom.ConfigMapKeyRef.name/key to reference an configMap's property)
